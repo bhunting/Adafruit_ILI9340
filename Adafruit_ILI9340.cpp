@@ -15,7 +15,12 @@
  ****************************************************/
 
 #include "Adafruit_ILI9340.h"
-#include <avr/pgmspace.h>
+#ifdef __AVR
+  #include <avr/pgmspace.h>
+#elif defined(ESP8266)
+  #include <pgmspace.h>
+#endif
+
 #include <limits.h>
 #include "pins_arduino.h"
 #include "wiring_private.h"
@@ -183,7 +188,7 @@ void Adafruit_ILI9340::begin(void) {
 #endif
 #if defined(__SAM3X8E__)
     SPI.setClockDivider(11); // 85MHz / 11 = 7.6 MHz (full! speed!)
-#endif    SPI.setBitOrder(MSBFIRST);
+#endif
     SPI.setBitOrder(MSBFIRST);
     SPI.setDataMode(SPI_MODE0);
   } else {
